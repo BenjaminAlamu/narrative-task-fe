@@ -9,7 +9,7 @@ export function createBuyOrder(payload) {
 }
 
 export function updateBuyOrder(id, payload) {
-    return Api.patch(`/buy-order/${id}`, payload);
+    return Api.put(`/buy-order/update/${id}`, payload);
 }
 
 export function deleteBuyOrder(id) {

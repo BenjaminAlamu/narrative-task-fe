@@ -10,7 +10,11 @@
       hide-default-footer
     >
       <template #[`item.action`]="{ item }">
-        <span class="mini-green mx-2">Edit</span>
+        <span
+          @click.prevent="$emit('shouldEditOrder', { value: true, item })"
+          class="mini-green mx-2"
+          >Edit</span
+        >
         <span
           class="mini-red mx-2"
           @click.prevent="

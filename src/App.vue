@@ -8,6 +8,7 @@
     <router-view
       @showDeleteConfirmation="handleDeleteForm($event)"
       @shouldBuyOrder="handleBuyOrder($event)"
+      @shouldEditOrder="handleEditOrder($event)"
       @showLoginForm="handleLoginForm($event)"
       class="boxed__container mt-32 py-12"
     />
@@ -29,6 +30,11 @@
       @shouldBuyOrder="handleBuyOrder($event)"
       :selectedDataset="selectedDataset"
     />
+    <EditBuyOrder
+      :shouldShowEditBuyOrder="showEditOrder"
+      @shouldEditOrder="handleEditOrder($event)"
+      :selectedDataset="selectedDataset"
+    />
   </v-app>
 </template>
 
@@ -42,12 +48,14 @@ export default {
     RegisterForm: () => import("@/components/RegisterForm.vue"),
     DeleteConfirmation: () => import("@/components/DeleteConfirmation.vue"),
     CreateBuyOrder: () => import("@/components/CreateBuyOrder.vue"),
+    EditBuyOrder: () => import("@/components/EditBuyOrder.vue"),
   },
   data: () => ({
     showLoginForm: false,
     showRegisterForm: false,
     showDeleteConfirmation: false,
     showBuyOrder: false,
+    showEditOrder: false,
     activeBuyOrder: {},
     selectedDataset: null,
   }),
@@ -64,6 +72,10 @@ export default {
     },
     handleBuyOrder(data) {
       this.showBuyOrder = data.value;
+      this.selectedDataset = data.item;
+    },
+    handleEditOrder(data) {
+      this.showEditOrder = data.value;
       this.selectedDataset = data.item;
     },
   },
