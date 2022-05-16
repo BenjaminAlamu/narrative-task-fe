@@ -1,10 +1,19 @@
 <template>
   <NioCard class="card__wrapper">
-    <p>{{ dataset.name }}</p>
+    <p class="card__title">{{ dataset.name }}</p>
     <p class="max-lines">{{ dataset.description }}</p>
-    <v-chip class="my-2" color="secondary">
-      {{ dataset.type }}
-    </v-chip>
+    <main class="d-flex justify-space-between">
+      <v-chip class="my-2" outlined color="primary">
+        {{ dataset.type }}
+      </v-chip>
+      <v-chip
+        @click="$emit('buyClicked', { value: true, item: dataset })"
+        class="my-2"
+        color="primary"
+      >
+        Purchase
+      </v-chip>
+    </main>
   </NioCard>
 </template>
 
@@ -21,9 +30,16 @@ export default {
   word-wrap: break-word;
   overflow: hidden;
   max-height: 4.6em;
+  font-size: 12px;
+  letter-spacing: 1.2px;
 }
 
 .card__wrapper {
   font-family: "Sora", sans-serif !important;
+}
+
+.card__title {
+  font-size: 16px;
+  text-transform: capitalize;
 }
 </style>

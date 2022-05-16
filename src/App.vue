@@ -1,10 +1,32 @@
 <template>
   <v-app id="app">
-    <HeaderComponent @showLoginForm="handleLoginForm($event)" />
-    <router-view class="boxed__container py-12" />
+    <HeaderComponent
+      @showLoginForm="handleLoginForm($event)"
+      @showRegisterForm="handleRegisterForm($event)"
+    />
+    <p style="margin: 30px"></p>
+    <router-view
+      @showDeleteConfirmation="handleDeleteForm($event)"
+      @shouldBuyOrder="handleBuyOrder($event)"
+      class="boxed__container mt-32 py-12"
+    />
     <LoginForm
       :shouldShowLoginForm="showLoginForm"
       @showLoginForm="handleLoginForm($event)"
+    />
+    <RegisterForm
+      :shouldShowRegisterForm="showRegisterForm"
+      @showRegisterForm="handleRegisterForm($event)"
+    />
+    <DeleteConfirmation
+      :shouldShowDeleteConfirmation="showDeleteConfirmation"
+      @showDeleteConfirmation="handleDeleteForm($event)"
+      :activeBuyOrder="activeBuyOrder"
+    />
+    <CreateBuyOrder
+      :shouldShowCreateBuyOrder="showBuyOrder"
+      @shouldBuyOrder="handleBuyOrder($event)"
+      :selectedDataset="selectedDataset"
     />
   </v-app>
 </template>
@@ -16,17 +38,43 @@ export default {
   components: {
     HeaderComponent: () => import("@/components/HeaderComponent.vue"),
     LoginForm: () => import("@/components/LoginForm.vue"),
+    RegisterForm: () => import("@/components/RegisterForm.vue"),
+    DeleteConfirmation: () => import("@/components/DeleteConfirmation.vue"),
+    CreateBuyOrder: () => import("@/components/CreateBuyOrder.vue"),
   },
   data: () => ({
     showLoginForm: false,
+    showRegisterForm: false,
+    showDeleteConfirmation: false,
+    showBuyOrder: false,
+    activeBuyOrder: {},
+    selectedDataset: null,
   }),
   methods: {
     handleLoginForm(value) {
       this.showLoginForm = value;
     },
+    handleRegisterForm(value) {
+      this.showRegisterForm = value;
+    },
+    handleDeleteForm(data) {
+      this.showDeleteConfirmation = data.value;
+      this.activeBuyOrder = data.item;
+    },
+    handleBuyOrder(data) {
+      this.showBuyOrder = data.value;
+      this.selectedDataset = data.item;
+    },
   },
 };
 </script>
+
+<style >
+.v-application,
+.v-card__title {
+  font-family: "Sora", sans-serif !important;
+}
+</style>
 
 
  

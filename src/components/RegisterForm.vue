@@ -5,7 +5,14 @@
     class="overflow-hidden form__wrapper"
   >
     <v-card class="px-4">
-      <v-card-title class="text-h5 pl-0">Login</v-card-title>
+      <v-card-title class="text-h5 pl-0">Register</v-card-title>
+
+      <nio-text-field
+        class="my-4"
+        v-model="data.name"
+        :label="'Full Name'"
+        type="text"
+      ></nio-text-field>
 
       <nio-text-field
         class="my-4"
@@ -28,7 +35,7 @@
           color="red"
           outlined
           depressed
-          @click.prevent="$emit('showLoginForm', false)"
+          @click.prevent="$emit('showRegisterForm', false)"
           class=""
           >Cancel</v-btn
         >
@@ -37,9 +44,9 @@
           :loading="loading"
           color="primary"
           depressed
-          @click.prevent="loginUser"
+          @click.prevent="registerUser"
           class=""
-          >Login</v-btn
+          >Register</v-btn
         >
       </v-card-actions>
     </v-card>
@@ -47,12 +54,12 @@
 </template>
 
 <script>
-import { login } from "../services/auth";
+import { register } from "../services/auth";
 export default {
-  props: ["shouldShowLoginForm"],
+  props: ["shouldShowRegisterForm"],
   computed: {
     showForm() {
-      return this.shouldShowLoginForm;
+      return this.shouldShowRegisterForm;
     },
   },
   data() {
@@ -62,17 +69,17 @@ export default {
     };
   },
   methods: {
-    async loginUser() {
+    async registerUser() {
       this.loading = true;
       try {
-        const res = await login(this.data);
-        this.$toast.success("Login successful");
+        const res = await register(this.data);
+        this.$toast.success("Registration successful");
         localStorage.setItem("narrative-token", res.data.data.token);
         localStorage.setItem(
           "narrative-user",
           JSON.stringify(res.data.data.user)
         );
-        this.$emit("showLoginForm", false);
+        this.$emit("showRegisterForm", false);
         this.$router.go();
       } catch (e) {
         this.$toast.error(e.response.data.message);

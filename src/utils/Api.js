@@ -10,7 +10,7 @@ const Api = axios.create({
 
 Api.interceptors.request.use(
   function (config) {
-    const token = localStorage.getItem('views-token') || ''
+    const token = localStorage.getItem('narrative-token') || ''
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`

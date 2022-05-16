@@ -1,16 +1,26 @@
 <template>
-  <div>
+  <div class="header__wrapper">
     <v-app-bar app color="primary" dark>
-      <div class="d-flex align-center">
-        <p class="h1">BuyOrderNG</p>
-      </div>
+      <v-btn text depressed @click="$router.push('/')" class=""
+        >BuyOrderNG</v-btn
+      >
 
       <v-spacer></v-spacer>
 
-      <v-btn v-if="isLoggedIn" text> My Orders </v-btn>
+      <v-btn
+        v-if="isLoggedIn"
+        color="primary"
+        depressed
+        @click="$router.push('/list')"
+        class=""
+        >My Orders</v-btn
+      >
 
       <v-btn v-if="!isLoggedIn" @click="$emit('showLoginForm', true)" text>
         Login
+      </v-btn>
+      <v-btn v-if="!isLoggedIn" @click="$emit('showRegisterForm', true)" text>
+        Register
       </v-btn>
       <v-btn v-else @click="logout" text> Log Out </v-btn>
     </v-app-bar>
@@ -29,11 +39,14 @@ export default {
   methods: {
     logout() {
       localStorage.clear();
-      this.$router.go();
+      this.$router.go("/");
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.header__wrapper {
+  font-family: "Sora", sans-serif !important;
+}
 </style>

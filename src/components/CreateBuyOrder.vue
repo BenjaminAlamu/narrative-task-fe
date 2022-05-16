@@ -5,20 +5,19 @@
     class="overflow-hidden form__wrapper"
   >
     <v-card class="px-4">
-      <v-card-title class="text-h5 pl-0">Login</v-card-title>
+      <v-card-title class="text-h5 pl-0">Create Order</v-card-title>
 
       <nio-text-field
         class="my-4"
-        v-model="data.email"
-        :label="'Email'"
-        type="email"
+        v-model="data.name"
+        :label="'Buy Order Name'"
       ></nio-text-field>
 
       <nio-text-field
         class="my-4"
-        v-model="data.password"
-        :label="'Password'"
-        type="password"
+        v-model="data.maxPrice"
+        :label="'Max Price'"
+        type="number"
       ></nio-text-field>
 
       <v-card-actions class="py-4">
@@ -28,7 +27,7 @@
           color="red"
           outlined
           depressed
-          @click.prevent="$emit('showLoginForm', false)"
+          @click.prevent="$emit('shouldBuyOrder', false)"
           class=""
           >Cancel</v-btn
         >
@@ -37,9 +36,9 @@
           :loading="loading"
           color="primary"
           depressed
-          @click.prevent="loginUser"
+          @click.prevent="create"
           class=""
-          >Login</v-btn
+          >Create</v-btn
         >
       </v-card-actions>
     </v-card>
@@ -47,12 +46,12 @@
 </template>
 
 <script>
-import { login } from "../services/auth";
+import { createBuyOrder } from "../services/buyOrder";
 export default {
-  props: ["shouldShowLoginForm"],
+  props: ["shouldShowCreateBuyOrder", "selectedDataset"],
   computed: {
     showForm() {
-      return this.shouldShowLoginForm;
+      return this.shouldShowCreateBuyOrder;
     },
   },
   data() {
@@ -62,18 +61,18 @@ export default {
     };
   },
   methods: {
-    async loginUser() {
+    async create() {
       this.loading = true;
       try {
-        const res = await login(this.data);
-        this.$toast.success("Login successful");
-        localStorage.setItem("narrative-token", res.data.data.token);
-        localStorage.setItem(
-          "narrative-user",
-          JSON.stringify(res.data.data.user)
-        );
-        this.$emit("showLoginForm", false);
-        this.$router.go();
+        const user = JSON.parse(localStorage.getItem("narrative-user"));
+        await createBuyOrder({
+          ...this.data,
+          user,
+          dataId: this.selectedDataset._id,
+        });
+        this.$toast.success("Created successful");
+        this.$emit("shouldBuyOrder", false);
+        this.$router.push("/list");
       } catch (e) {
         this.$toast.error(e.response.data.message);
       }

@@ -7,6 +7,7 @@ import "@/assets/css/main.css";
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 import router from "./router";
+import "./utils/filters";
 
 Vue.use(Tacklebox)
 const options = {

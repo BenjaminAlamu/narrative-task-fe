@@ -1,6 +1,11 @@
 <template>
   <div>
-    <v-row>
+    <v-progress-circular
+      v-if="loading"
+      indeterminate
+      color="primary"
+    ></v-progress-circular>
+    <v-row class="">
       <v-col
         cols="12"
         md="4"
@@ -9,7 +14,10 @@
         v-for="content in datasets"
         :key="content._id"
       >
-        <DataCard :dataset="content" />
+        <DataCard
+          @buyClicked="$emit('shouldBuyOrder', $event)"
+          :dataset="content"
+        />
       </v-col>
     </v-row>
   </div>
@@ -20,8 +28,8 @@ import { getDataset } from "../services/dataset";
 export default {
   async mounted() {
     const res = await getDataset();
-    console.log({ res });
     this.datasets = res.data.data.datasets;
+    this.loading = false;
   },
   components: {
     DataCard: () => import("@/components/DataCard.vue"),
@@ -29,6 +37,7 @@ export default {
   data() {
     return {
       datasets: [],
+      loading: true,
     };
   },
 };
