@@ -1,9 +1,7 @@
 import axios from "axios";
 
 const Api = axios.create({
-  baseURL: process.env.VUE_APP_API_BASE_URL || 'http://localhost:5693/api/v1',
-  // baseURL:
-  //   "https://views-app-dev-be.herokuapp.com/",
+  baseURL: process.env.VUE_APP_API_BASE_URL,
   crossdomain: true,
   timeout: 120000,
 });
