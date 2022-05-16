@@ -8,6 +8,7 @@
     <router-view
       @showDeleteConfirmation="handleDeleteForm($event)"
       @shouldBuyOrder="handleBuyOrder($event)"
+      @showLoginForm="handleLoginForm($event)"
       class="boxed__container mt-32 py-12"
     />
     <LoginForm

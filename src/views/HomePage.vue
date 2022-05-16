@@ -14,10 +14,7 @@
         v-for="content in datasets"
         :key="content._id"
       >
-        <DataCard
-          @buyClicked="$emit('shouldBuyOrder', $event)"
-          :dataset="content"
-        />
+        <DataCard @buyClicked="checkLogin($event)" :dataset="content" />
       </v-col>
     </v-row>
   </div>
@@ -33,6 +30,16 @@ export default {
   },
   components: {
     DataCard: () => import("@/components/DataCard.vue"),
+  },
+  methods: {
+    checkLogin(item) {
+      const user = JSON.parse(localStorage.getItem("narrative-user"));
+      if (user) {
+        this.$emit("shouldBuyOrder", item);
+      } else {
+        this.$emit("showLoginForm", true);
+      }
+    },
   },
   data() {
     return {

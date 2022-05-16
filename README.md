@@ -1,8 +1,14 @@
-# narrative-web
+# Front End Repo
 
+## Technologies Used
+[Vue](https://vuejs.org/)
+[Vuetify](https://vuetifyjs.com/en/)
+[Tacklebox](https://docs.narrative.dev/tacklebox)
 ## Project setup
+
+To Install all dependencies
 ```
-yarn install
+yarn
 ```
 
 ### Compiles and hot-reloads for development
@@ -20,5 +26,5 @@ yarn build
 yarn lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
